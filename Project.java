@@ -10,11 +10,21 @@ class Project  implements Serializable {
 	private String title;
 	private String leader;
 	private boolean status;
-
-	public Project(String title, String leader, boolean status) {
+	
+	//new Project, no attributes
+	public Project(){
+	}
+	
+	//create a project with a title only
+	public Project(String title){
+		this.title = title;
+	}
+	
+	//create a project with a title and leader. Automatically 'on-going'
+	public Project(String title, String leader) {
 		this.title = title;
 		this.leader = leader;
-		this.status = status;
+		status = false;
 	}
 
 	public String getTitle() {

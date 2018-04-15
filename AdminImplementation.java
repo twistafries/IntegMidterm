@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
+import common.*;
 public class AdminImplementation extends UnicastRemoteObject implements AdminInterface {
 	private Scanner scn = new Scanner(System.in);
 	public AdminImplementation () throws RemoteException {
@@ -40,7 +41,7 @@ public class AdminImplementation extends UnicastRemoteObject implements AdminInt
 	public void viewProjectList() throws RemoteException {
 		try {
 			System.out.println("\nProject List\n");
-			BufferedReader br = new BufferedReader(new FileReader("ProjectList.csv"));
+			BufferedReader br = new BufferedReader(new FileReader("/Uploads/ProjectList.csv"));
 			List<String> list = new ArrayList<String>();
 			String[] str = null;
 			String line = "";
