@@ -12,7 +12,7 @@ public class MemberModuleImplementation extends UnicastRemoteObject implements M
 	}
 
 	@Override
-	public String viewListOfProjects() throws RemoteException {
+	public void viewListOfProjects() throws RemoteException {
 		try {
 			System.out.println("\nList of Projects\n: ");
 			BufferedReader breader = new BufferedReader(new FileReader("ProjectList.csv"));
