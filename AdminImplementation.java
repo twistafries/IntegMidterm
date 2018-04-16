@@ -1,3 +1,5 @@
+package server;
+
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.FileReader;
@@ -11,51 +13,49 @@ import java.util.List;
 import java.util.ArrayList;
 
 import common.*;
+
 public class AdminImplementation extends UnicastRemoteObject implements AdminInterface {
 	private Scanner scn = new Scanner(System.in);
+	private List<Project> pList = new ArrayList<>();
+	private List<User> ulist = new ArrayList<>();
+	
 	public AdminImplementation () throws RemoteException {
-	}
-
-	@Override
-
-	public void createProject() throws RemoteException {
-		System.out.println("\nCreate Project\n");
-		try {
-			PrintWriter pw = new PrintWriter(new FileWriter("Project.csv", true));
-			System.out.print("Enter Project Name: ");
-			String projectName = scn.nextLine();
-
-			System.out.print("Enter Project Leader: ");
-			String projectLeader = scn.nextLine();
-
-			boolean projectStatus = false;
-
-			pw.println(projectName + "," + projectLeader + "," +projectStatus);
-			new Project (projectName, projectLeader, projectStatus);
-			pw.append(projectName + "," + projectLeader + "," +projectStatus);
-			pw.close();
-		} catch(Exception err) {}
-	}
-
-
-	public void viewProjectList() throws RemoteException {
-		try {
-			System.out.println("\nProject List\n");
-			BufferedReader br = new BufferedReader(new FileReader("/Uploads/ProjectList.csv"));
-			List<String> list = new ArrayList<String>();
-			String[] str = null;
+		try{
+			String location = "Users.csv";
+			BufferedReader br = new BufferedReader(new FileReader(location));
 			String line = "";
+			
+			while((line = br.readLine()) != null){
+				String[] user = line.split(",");
+				User u = new User(user[0], user[1], user[2], user[3], user[4]);
+				ulist.add(u);
+			}
+			
+			location = "ProjectList.csv";
+			line = "";
 			while ((line = br.readLine()) != null) {
-				list.add(line);
+				String[] project = line.split(",");
+				Project p = new Project(project[0], true);
+				pList.add(p);
 			}
-			System.out.format("%-30s%-30s%-10s", "Project Name", "ProjectLeader", "ProjectStatus");
-			System.out.println();
-			for(int x = 0; x < list.size(); x++){
-				str = list.get(x).split(",");
-				System.out.printf("%-30s%-30s%-10s", str[0], str[1], str[2]);
-				System.out.println();
-			}
-			br.close();
-		} catch (Exception err) {}
+		} catch (Exception err) {
+		}
+	}
+	
+	public List<User> loadUsers() throws RemoteException{
+		return ulist;
+	}
+
+	public void createProject(String name, User leader) throws RemoteException {
+		Project p = new Project(name, leader);
+		pList.add(p);
+	}
+
+	public List<Project> viewProjectList() throws RemoteException {
+		return pList;
+	}
+	
+	public void assignLeader(User u) throws RemoteException{
+		
 	}
 }

@@ -4,11 +4,11 @@ import java.util.Scanner;
 import java.io.Serializable;
 
 
-class Project  implements Serializable {
+public class Project implements Serializable{
 	Scanner kbd = new Scanner(System.in);
 
 	private String title;
-	private String leader;
+	private User leader;
 	private boolean status;
 	
 	//new Project, no attributes
@@ -21,17 +21,21 @@ class Project  implements Serializable {
 	}
 	
 	//create a project with a title and leader. Automatically 'on-going'
-	public Project(String title, String leader) {
+	public Project(String title, User leader) {
 		this.title = title;
 		this.leader = leader;
 		status = false;
 	}
-
+	
+	public Project(String title, Boolean b){
+		this.title = title;
+		status = b;
+	}
 	public String getTitle() {
 		return title;
 	}
 
-	public String getleader() {
+	public User getleader() {
 		return leader;
 	}
 
@@ -41,14 +45,12 @@ class Project  implements Serializable {
 		}return true;
 	}
 
-	public void setTitle() {
-		System.out.print("Enter the title of the Project: ");
-		title = kbd.nextLine();
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public void setleader() {
-		System.out.print("Enter the name of the Leader: ");
-		leader = kbd.nextLine();
+	public void setleader(User leader) {
+		this.leader = leader;
 	}
 
 	public void setStatus(){
@@ -59,5 +61,9 @@ class Project  implements Serializable {
 		}else{
 			status = false;
 		}
+	}
+	
+	public String toString(){
+		return "Project : " + title + "\nLeader: " + leader;
 	}
 }
