@@ -36,19 +36,23 @@ public class MemberModuleImplementation extends UnicastRemoteObject implements M
 	}
 
 
-	public byte[] uploadFile(String upload) throws RemoteException {
+	public boolean uploadFile(String upload) throws RemoteException {
 		try {
-         File file = new File(upload);
-         byte buffer[] = new byte[(int)file.length()];
-         BufferedInputStream input = new
-      	 BufferedInputStream(new FileInputStream(upload));
-         input.read(buffer,0,buffer.length);
-         input.close();
-         return(buffer);
-      	} catch(Exception e){
-	 e.printStackTrace();
- System.out.println("MemberModuleImplementation: "+e.getMessage());
-	}
-         return(null);
-   }
+        		File file = new File(upload);
+			if(file.exits()){
+				FileOutputStream writefile = new FileOutputStream("./Files/"+fileName+"."+fileType);
+				FileInputStream readFile = new FileInputStream(file);
+				byte b[] = new byte[(int)file.length()];
+				writefile.write(b);
+				writefile.close();
+			}else{
+				return false;
+			}
+      		} catch(Exception e){
+	 		e.printStackTrace();
+ 			System.out.println("MemberModuleImplementation: "+e.getMessage());
+			return false;
+		}
+         	return true;
+   	}
 }
